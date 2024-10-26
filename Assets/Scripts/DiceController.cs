@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class DiceRoll : MonoBehaviour
 {
@@ -15,17 +17,19 @@ public class DiceRoll : MonoBehaviour
     private Vector3 originalPosition;      // Original position of the dice
     private Quaternion originalRotation;   // Original rotation of the dice
 
+    public DraggableDice draggableDice;
+
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
-        rend.sprite = diceSides[0];
+        rend.sprite = diceSides[6];
         originalPosition = transform.position;
         originalRotation = transform.rotation;
     }
 
     public void RollDice()
     {
-        if (!isRolling)
+        if (!isRolling && !draggableDice.isPlaced)
         {
             StartCoroutine(RollTheDice());
             StartCoroutine(ShakeDice());
@@ -47,15 +51,15 @@ public class DiceRoll : MonoBehaviour
         // Play rolling animation (sprite changes)
         while (currentSpeed < maxSpeed)
         {
-            randomSide = Random.Range(0, diceSides.Length);
+            randomSide = Random.Range(0, diceSides.Length-1);
             rend.sprite = diceSides[randomSide];
-
+                
             yield return new WaitForSeconds(currentSpeed);
             currentSpeed += speedIncrement;
         }
 
         // Stop on a final random side
-        randomSide = Random.Range(0, diceSides.Length);
+        randomSide = Random.Range(0, diceSides.Length-1);
         rend.sprite = diceSides[randomSide];
 
         // Stop particle effect
