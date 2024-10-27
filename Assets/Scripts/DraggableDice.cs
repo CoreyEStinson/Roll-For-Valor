@@ -16,6 +16,10 @@ public class DraggableDice : MonoBehaviour
     private Collider2D currentValidArea; // Reference to the current valid area
 
     public bool isPlaced = false;
+
+    public bool isEmptyDice = false;
+
+
     void Start()
     {
         // Store the original position
@@ -26,7 +30,7 @@ public class DraggableDice : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!isDragging)
+        if (!isDragging && !isEmptyDice)
         {
             // Start dragging
             isDragging = true;

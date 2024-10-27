@@ -17,6 +17,8 @@ public class DiceRoll : MonoBehaviour
     private Vector3 originalPosition;      // Original position of the dice
     private Quaternion originalRotation;   // Original rotation of the dice
 
+    public float rollsLeft = 2;
+    public float maxRolls = 2;
     public DraggableDice draggableDice;
 
     void Start()
@@ -25,14 +27,18 @@ public class DiceRoll : MonoBehaviour
         rend.sprite = diceSides[6];
         originalPosition = transform.position;
         originalRotation = transform.rotation;
+        draggableDice.isEmptyDice = true;
     }
 
     public void RollDice()
     {
-        if (!isRolling && !draggableDice.isPlaced)
+        if (!isRolling && !draggableDice.isPlaced && rollsLeft > 0)
         {
+            rollsLeft--;
+            draggableDice.isEmptyDice = false;
             StartCoroutine(RollTheDice());
             StartCoroutine(ShakeDice());
+            
         }
     }
 
