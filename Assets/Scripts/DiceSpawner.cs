@@ -11,6 +11,8 @@ public class DiceSpawner : MonoBehaviour
     public float rollDelay = 2.0f; // Delay between rolls in seconds
     public List<GameObject> diceList = new List<GameObject>();
 
+    public GameObject screenShakeObject; // Reference to the ScreenShake GameObject
+
     private bool canRoll = true; // Flag to check if dice can be rolled
 
     void Start()
@@ -27,6 +29,14 @@ public class DiceSpawner : MonoBehaviour
             float xPosition = spawnPosition.x + (i * xSpacing);
             Vector3 dicePosition = new Vector3(xPosition, spawnPosition.y, spawnPosition.z);
             GameObject newDice = Instantiate(dicePrefab, dicePosition, Quaternion.identity);
+
+            // Set the screenShake variable of the DraggableDice component
+            DraggableDice draggableDice = newDice.GetComponent<DraggableDice>();
+            if (draggableDice != null)
+            {
+                draggableDice.screenShake = screenShakeObject.GetComponent<ScreenShake>();
+            }
+
             diceList.Add(newDice);
         }
     }

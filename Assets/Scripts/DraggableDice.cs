@@ -19,11 +19,20 @@ public class DraggableDice : MonoBehaviour
 
     public bool isEmptyDice = false;
 
+    public ScreenShake screenShake;
+    public float shakeMag = 0.1f;
+    public float shakeDur = 0.5f;
+
+    public float trailSpeed = 0.1f;      // Speed at which the dice trails behind the mouse
+    public float growScale = 1.2f;       // Scale factor when the dice is picked up
+
+    private Vector3 originalScale;       // Store the original scale of the dice
 
     void Start()
     {
-        // Store the original position
+        // Store the original position and scale
         originalPosition = transform.position;
+        originalScale = transform.localScale;
         diceCollider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
     }
@@ -34,6 +43,8 @@ public class DraggableDice : MonoBehaviour
         {
             // Start dragging
             isDragging = true;
+            // Scale up the dice
+            transform.localScale = originalScale * growScale;
             //Debug.Log("Started dragging the dice.");
         }
     }
@@ -44,6 +55,8 @@ public class DraggableDice : MonoBehaviour
         {
             // Stop dragging
             isDragging = false;
+            // Return the dice to its original size
+            transform.localScale = originalScale;
             //Debug.Log("Stopped dragging the dice.");
 
             if (validPlacement)
@@ -66,6 +79,9 @@ public class DraggableDice : MonoBehaviour
                     // Snap to the snap position and move die in front
                     transform.position = new Vector3(snapPosition.x, snapPosition.y, -1f);
                     isPlaced = true;
+                    screenShake.SetShakeMagnitude(shakeMag);
+                    screenShake.SetShakeDuration(shakeDur);
+                    screenShake.TriggerShake();
                 }
                 else
                 {
@@ -88,7 +104,9 @@ public class DraggableDice : MonoBehaviour
             // Get mouse position in world coordinates
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = -1f; // Move die in front
-            transform.position = mousePosition;
+
+            // Make the dice trail behind the mouse
+            transform.position = Vector3.Lerp(transform.position, mousePosition, trailSpeed);
         }
     }
 
@@ -104,7 +122,9 @@ public class DraggableDice : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        screenShake.SetShakeMagnitude(shakeMag / 1.5f);
+        screenShake.SetShakeDuration(shakeDur / 1.3f);
+        screenShake.TriggerShake();
         transform.position = targetPosition;
         diceCollider.enabled = true; // Ensure the collider is enabled after moving back
         isPlaced = false;
@@ -119,7 +139,7 @@ public class DraggableDice : MonoBehaviour
             // Calculate the center of the collider
             snapPosition = other.bounds.center;
             currentValidArea = other; // Store the valid area
-            //Debug.Log("Dice is in a valid area!");
+                                      //Debug.Log("Dice is in a valid area!");
         }
     }
 

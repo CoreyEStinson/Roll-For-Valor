@@ -143,7 +143,6 @@ MonoBehaviour:
   rollsLeft: 2
   maxRolls: 2
   draggableDice: {fileID: 3342960794417717461}
-  rollButtonController: {fileID: 4174939756513656066, guid: e57974c599f18974f8e03220241edca8, type: 3}
 --- !u!61 &3828906757358254997
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -205,6 +204,11 @@ MonoBehaviour:
   moveBackTime: 0.25
   isPlaced: 0
   isEmptyDice: 0
+  screenShake: {fileID: 0}
+  shakeMag: 0.025
+  shakeDur: 0.2
+  trailSpeed: 0.04
+  growScale: 1.15
 --- !u!50 &6110854546827863562
 Rigidbody2D:
   serializedVersion: 5
