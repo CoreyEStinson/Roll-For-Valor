@@ -140,9 +140,9 @@ MonoBehaviour:
   shakeIntensity: 0.01
   shakeFrequency: 0.01
   rollParticles: {fileID: 0}
-  rollsLeft: 2
-  maxRolls: 2
+  maxRolls: 15
   draggableDice: {fileID: 3342960794417717461}
+  diceRoll: {fileID: 0}
 --- !u!61 &3828906757358254997
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -209,6 +209,7 @@ MonoBehaviour:
   shakeDur: 0.2
   trailSpeed: 0.04
   growScale: 1.15
+  diceClick: {fileID: 0}
 --- !u!50 &6110854546827863562
 Rigidbody2D:
   serializedVersion: 5

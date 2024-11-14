@@ -28,6 +28,8 @@ public class DraggableDice : MonoBehaviour
 
     private Vector3 originalScale;       // Store the original scale of the dice
 
+    public AudioSource diceClick;
+
     void Start()
     {
         // Store the original position and scale
@@ -35,6 +37,7 @@ public class DraggableDice : MonoBehaviour
         originalScale = transform.localScale;
         diceCollider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
+        diceClick = GameObject.Find("Die Click").GetComponent<AudioSource>();
     }
 
     void OnMouseDown()
@@ -49,6 +52,7 @@ public class DraggableDice : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     void OnMouseUp()
     {
         if (isDragging)
@@ -82,6 +86,7 @@ public class DraggableDice : MonoBehaviour
                     screenShake.SetShakeMagnitude(shakeMag);
                     screenShake.SetShakeDuration(shakeDur);
                     screenShake.TriggerShake();
+                    diceClick.gameObject.GetComponent<SoundRandomiser>().PlaySound();
                 }
                 else
                 {

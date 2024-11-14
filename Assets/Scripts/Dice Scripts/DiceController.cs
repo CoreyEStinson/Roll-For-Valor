@@ -17,23 +17,31 @@ public class DiceRoll : MonoBehaviour
     private Vector3 originalPosition;      // Original position of the dice
     private Quaternion originalRotation;   // Original rotation of the dice
 
-    public float rollsLeft = 2;
-    public float maxRolls = 2;
+    private float rollsLeft;
+    public float maxRolls = 15;
     public DraggableDice draggableDice;
+
+    public AudioSource diceRoll;
+
+    int randomSide;
 
     void Start()
     {
+        rollsLeft = maxRolls;
         rend = GetComponent<SpriteRenderer>();
         rend.sprite = diceSides[6];
         originalPosition = transform.position;
         originalRotation = transform.rotation;
         draggableDice.isEmptyDice = true;
+        diceRoll = GameObject.Find("Die Roll").GetComponent<AudioSource>();
+
     }
 
     public void RollDice()
     {
         if (!isRolling && !draggableDice.isPlaced && rollsLeft > 0)
         {
+            diceRoll.gameObject.GetComponent<SoundRandomiser>().PlaySound();
             rollsLeft--;
             draggableDice.isEmptyDice = false;
             StartCoroutine(RollTheDice());
@@ -45,7 +53,7 @@ public class DiceRoll : MonoBehaviour
     IEnumerator RollTheDice()
     {
         isRolling = true;
-        int randomSide = 0;
+        randomSide = 0;
         float currentSpeed = initialSpeed;
 
         // Start particle effect
@@ -98,5 +106,9 @@ public class DiceRoll : MonoBehaviour
         // Reset transformations
         transform.position = originalPosition;
         transform.rotation = originalRotation;
+    }
+    public int GetRollNumber()
+    {
+        return randomSide+1;
     }
 }
