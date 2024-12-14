@@ -1,4 +1,5 @@
-# Roll For Valor
+# Roll For Valor ![Slime Enemy](https://github.com/user-attachments/assets/c37d3843-029c-4a5e-831e-fa3d9f4c51d6)
+
 
 Welcome to the official repository for **Roll For Valor**, a roguelike based around rolling dice!
 
@@ -43,4 +44,5 @@ For any questions, feedback, or collaboration opportunities, feel free to get in
 
 ![Dice Phase](https://github.com/user-attachments/assets/4d256a10-026b-4bcf-8374-e56e348020cc)
 ![Dice Phase](https://github.com/user-attachments/assets/95c8e805-fc2a-45ae-ab9f-8482d5bc9796)
+
 
